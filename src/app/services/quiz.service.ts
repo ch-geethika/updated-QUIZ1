@@ -30,9 +30,10 @@ export class QuizService {
   getcourses():Observable<Icourse[]>{
     return this.http.get<Icourse[]>(this.apiServer + "/Course/",this.httpOptions);
   }​​​​
-  getQuestions(courseid,levelid): Observable<Iquestions[]> {
+  getQuestions(Course_id,Level_id): Observable<Iquestions[]> {
     return this.http.get<Iquestions[]>
-    (this.apiServer + '/questions?courseid='+courseid +'&&levelid='+levelid )
+    (this.apiServer + '/questions'+ Course_id +Level_id )
    }
   }
+  
 

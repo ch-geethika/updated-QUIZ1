@@ -13,6 +13,7 @@ export class Iquestions {
         Option_3:string;
         Option_4:string;        
         Correct_Answer:number;
+        Selected:boolean;
 }
 
 

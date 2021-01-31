@@ -30,6 +30,7 @@ export class TestComponent implements OnInit {
         Option_3:null,
         Option_4:null,        
         Correct_Answer:null,
+        Selected: null,
       }
   
     constructor(private quizservice:QuizService,private route: Router) {
@@ -65,6 +66,7 @@ export class TestComponent implements OnInit {
 }) 
  console.log(this.Courseid)
 }
+
 Next()
 {
 
