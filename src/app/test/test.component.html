@@ -1,0 +1,75 @@
+<p>test works!</p>
+<body>
+    <div class="container">
+       
+        <form class="form-horizontal" role="form" #userform='ngForm' (ngSubmit)='startTest()'>
+            <h3>Quiz</h3>
+
+            <div class="form-group">
+                <label for="Course_id">Select Course</label>
+                <select id="Course_id" name="Course_id" [(ngModel)] = "Courseid">
+                  <option *ngFor="let course of courses" value={{course.Course_id}}>{{course.Course_name}}</option>
+                 </select>
+              </div>
+                      
+<div class='form-group'>
+    <label class="control-label col-sm-3" for ='Level_id' style="color:black" >Level</label>
+    <div class="col-sm-9"> 
+    <input class="form-control" type='text'  placeholder="Select Level" id='Level_id' name='Level_id' required [(ngModel)]='Level_id' #namecontrol='ngModel'/>
+    <span class='help-block alert-danger' >
+    
+    </span>
+    </div>
+</div>      
+
+<div class="container mt-sm-5 my-1">
+    <div class="question ml-sm-5 pl-sm-5 pt-2">
+        <div class="py-2 h5"><b>{{Questions[QNo]?.Question1}}</b></div>
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options"> <label class="options"> {{Questions[QNo]?.Option_1}} <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options"> {{Questions[QNo]?.Option_2}} <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">{{Questions[QNo]?.Option_3}} <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">{{Questions[QNo]?.Option_4}}<input type="radio" name="radio"> <span class="checkmark"></span> </label> </div>
+    </div>
+    <div class="d-flex align-items-center pt-3">
+        <!-- <div id="prev"> <button class="btn btn-primary">Previous</button> </div>
+        <div class="ml-auto mr-sm-5"> <button class="btn btn-success">Next</button> </div> -->
+        <div><input type="button" value="Next" (click)="Next()"></div>
+        <div><input type="button" value="Previous" (click)="Previous()"></div>
+    </div>
+</div>
+
+           
+             <button type="submit" class="btn btn-primary btn-block" [disabled]='userform.invalid'>Submit</button> 
+           <!-- <table class="table">            
+                <tr><td></td> </tr> 
+                <tr><td>1.{{Questions[QNo]?.Option_1}}</td></tr>           
+                 <tr><td>2.{{Questions[QNo]?.Option_2}}</td></tr>
+                 <tr><td>3.{{Questions[QNo]?.Option_3}}</td></tr>
+                 <tr><td>4.{{Questions[QNo]?.Option_4}}</td> </tr> 
+                 <tr><td><input type="button" value="Next" (click)="Next()"> </td></tr> -->
+            
+                     <!-- Question_id:number;
+        Course_id:number;
+        Level_id:number;
+        Question_No: number;
+        Question:string;
+        Option_1:string;
+        Option_2:string;
+        Option_3:string;
+        Option_4:string;        
+        Correct_Answer:number; -->
+
+        
+     <!-- </table>  -->
+            
+        <!-- <ul>
+
+            <li *ngFor="let Question of Questions; index as i" >
+                {{Question.Option_1}}
+                {{Questions[i].Option_2}}
+            </li>
+        </ul> -->
+
+        <!-- {{Questions[1].Option_2}} -->
+        <!-- {{Questions[0].Option_1}} -->
+
+        </form>
+    </div>
+</body> 
