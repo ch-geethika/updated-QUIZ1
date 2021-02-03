@@ -6,14 +6,13 @@ export class Iquestions {
         Course_id:number;
         Level_id:number;
         Question_No: number;
-
-        Question1:string;
+         Question1:string;
         Option_1:string;
         Option_2:string;
         Option_3:string;
         Option_4:string;        
-        Correct_Answer:number;
-        Selected:boolean;
+        Correct_answer:number;
+       
 }
 
 

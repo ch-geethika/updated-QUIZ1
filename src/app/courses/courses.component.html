@@ -1,1 +1,38 @@
-<p>courses works!</p>
+
+
+    <!-- <div class="container"> -->
+<!--        
+        <form class="form-horizontal" role="form" #userform='ngForm' (ngSubmit)='ngOnInit()'>
+            <h3>Courses available with us!</h3>
+
+            <div class="form-group">
+                <label for="Course_id">Select Course</label>
+                <select id="Course_id" name="Course_id" [(ngModel)] = "Courseid">
+                  <option *ngFor="let course of courses" value={{course.Course_id}}>{{course.Course_name}}</option>
+                 </select> -->
+
+                <div class="container">
+       
+                    <form class="form-horizontal" role="form" #userform='ngForm' (ngSubmit)='ngOnInit()'>
+                        <h3>Courses available with us!</h3>
+                        
+                        <div class="form-group">
+                            <div *ngFor="let course of courses" > 
+                        <button input type="button" class="button" [routerLink]="['/startexam/',course.Course_id]" >{{course.Course_name}}</button> 
+                    </div>
+                        <!-- <button input type="button" class="button"><a routerLink="/startexam/Course_id" routerLinkActive="active">SQL</a></button> 
+                        <button input type="button" class="button"><a routerLink="/startexam/Course_id" routerLinkActive="active">C#</a></button> 
+                        <button input type="button" class="button"><a routerLink="/startexam/Course_id" routerLinkActive="active">Python</a></button> 
+                         -->
+                        <!-- <button type="submit" class="btn btn-primary btn-block" > <a routerLink="/startexam/Course_id" routerLinkActive="active">Submit</a></button>  -->
+                        </div>
+                    </form>
+                        </div>
+                          
+<!--                  
+             <button type="submit" class="btn btn-primary btn-block" > <a routerLink="/courseinfo" routerLinkActive="active">Submit</a></button> 
+              </div>
+              </form>
+             </div> -->
+
+

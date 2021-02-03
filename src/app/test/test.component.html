@@ -1,80 +1,173 @@
-<p>test works!</p>
-<body>
-    <div class="container">
+
+<body style="padding-left: 28px;">
+    <form class="form-horizontal" class="form" #userform='ngForm' (ngSubmit)='startTest()'>
+        <!-- <h1 style="text-align: center; color: white;">Quiz</h1> -->
+        <div class='form-group'>
+            <label class="control-label col-sm-0" for ='Level_id' style="color:black">Level:</label> {{Level_id}}
+           
+        </div> 
+        Timer: {{display}}
+ 
+
+<ng-template #Q> 
+    <div style="text-align:left; padding-right: 35%;" >
+        
+        <div class="py-2 h25" style="font: size 19px;" style="text-align:left;"><b>{{Questions[QNo]?.Question1}}</b></div><br>
+      
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3 form-group" style="text-align: left;" id="options">
+             <label class="options"><input type="radio" name="a" value ="1" required #a="ngModel" [(ngModel)] = "r1"> {{Questions[QNo]?.Option_1}}  <span class="checkmark"></span>
+             </label>
+             <br>
+              <label class="options"><input type="radio" name="a" value="2" required #a="ngModel" [(ngModel)] = "r1"> {{Questions[QNo]?.Option_2}}  <span class="checkmark"></span>
+             </label><br> 
+             <label class="options"><input type="radio" name="a" value="3" required #a="ngModel" [(ngModel)] = "r1"> {{Questions[QNo]?.Option_3}}  <span class="checkmark"></span>
+             </label> <br>
+             <label class="options"><input type="radio" name="a" value="4" required #a="ngModel" [(ngModel)] = "r1"> {{Questions[QNo]?.Option_4}} <span class="checkmark"></span> </label>
+           <br>
+           <div *ngIf="!a?.valid && (a?.dirty || a?.touched)" class="error">
+            <div *ngIf="a.errors.required">
+              Gender is required
+            </div>
+          </div>
+           
+             Correct_Answer: {{Questions[QNo]?.Correct_answer}}
+
+            </div>
+   
+    <div>
+     
+       <br> <input type="button"  class="btn btn-dark btn-success"  value="Previous" (click)="Previous()">
+       &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  
+       &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; 
+        &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;
+       <input type="button" class="btn btn-dark btn-success"   style="padding-right: 4%; vertical-align: middle;"  [disabled]="QNo>=9 ? true : false" value="Next" (click)="Next()" >
+     
+       <input type="button" class="btn btn-dark btn-success poz"  value="Submit Test" (click)="submitTest()">
        
-        <form class="form-horizontal" role="form" #userform='ngForm' (ngSubmit)='startTest()'>
-            <h3>Quiz</h3>
-
-            <div class="form-group">
-                <label for="Course_id">Select Course</label>
-                <select id="Course_id" name="Course_id" [(ngModel)] = "Courseid">
-                  <option *ngFor="let course of courses" value={{course.Course_id}}>{{course.Course_name}}</option>
-                 </select>
-              </div>
-                      
-<div class='form-group'>
-    <label class="control-label col-sm-3" for ='Level_id' style="color:black" >Level</label>
-    <div class="col-sm-9"> 
-    <input class="form-control" type='text'  placeholder="Select Level" id='Level_id' name='Level_id' required [(ngModel)]='Level_id' #namecontrol='ngModel'/>
-    <span class='help-block alert-danger' >
-    
-    </span>
-    </div>
-</div>      
-
-<div class="container mt-sm-5 my-1">
-    <div class="question ml-sm-5 pl-sm-5 pt-2">
-        <div class="py-2 h5"><b>{{Questions[QNo]?.Question1}}</b></div>
-        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-             <label class="options"> {{Questions[QNo]?.Option_1}} <input type="radio" name="radio"> <span class="checkmark"></span>
-             </label> <label class="options"> {{Questions[QNo]?.Option_2}} <input type="radio" name="radio"> <span class="checkmark"></span>
-             </label> <label class="options">{{Questions[QNo]?.Option_3}} <input type="radio" name="radio"> <span class="checkmark"></span>
-             </label> <label class="options">{{Questions[QNo]?.Option_4}}<input type="radio" name="radio"> <span class="checkmark"></span> </label>
-             </div>
-    </div>
-    <div class="d-flex align-items-center pt-3">
-        <!-- <div id="prev"> <button class="btn btn-primary">Previous</button> </div>
-        <div class="ml-auto mr-sm-5"> <button class="btn btn-success">Next</button> </div> -->
-        <div><input type="button" value="Next" (click)="Next()"></div>
-        <div><input type="button" value="Previous" (click)="Previous()"></div>
     </div>
 </div>
+</ng-template>
+<div class="container mt-sm-5 my-1">
 
-           
-             <button type="submit" class="btn btn-primary btn-block" [disabled]='userform.invalid'>Submit</button> 
-           <!-- <table class="table">            
-                <tr><td></td> </tr> 
-                <tr><td>1.{{Questions[QNo]?.Option_1}}</td></tr>           
-                 <tr><td>2.{{Questions[QNo]?.Option_2}}</td></tr>
-                 <tr><td>3.{{Questions[QNo]?.Option_3}}</td></tr>
-                 <tr><td>4.{{Questions[QNo]?.Option_4}}</td> </tr> 
-                 <tr><td><input type="button" value="Next" (click)="Next()"> </td></tr> -->
-            
-                     <!-- Question_id:number;
-        Course_id:number;
-        Level_id:number;
-        Question_No: number;
-        Question:string;
-        Option_1:string;
-        Option_2:string;
-        Option_3:string;
-        Option_4:string;        
-        Correct_Answer:number; -->
+    <div class="question ml-sm-5 pl-sm-5 pt-2">
+        <!-- <button type="submit"  class="btn btn-primary btn-success" [disabled]='userform.invalid'>Start Test</button> <br><br> -->
+        <div *ngIf = "TestStatus then Q else Result"></div>
+       
+</div>
+ <!-- <button type="submit" class="btn btn-primary btn-success" [disabled]='userform.invalid'>Submit</button>  -->
+    
+</div> 
+    <ng-template #Result>
+    Marks scored: {{this.Marks}}/10
+    <br>
+    <br>
 
-        
-     <!-- </table>  -->
-            
-        <!-- <ul>
+    {{Message}}
 
-            <li *ngFor="let Question of Questions; index as i" >
-                {{Question.Option_1}}
-                {{Questions[i].Option_2}}
-            </li>
-        </ul> -->
+    <input  type="button"  class="btn btn-dark btn-success poz"  value="Continue" (click)="Continue()">
+         
+    <!-- <input  type="button"  class="btn btn-dark btn-success poz" value="Logout"> -->
+    <br>
+    <div *ngIf = "ResultStatus then Continue else Logout" >
+     </div>
+</ng-template>
 
-        <!-- {{Questions[1].Option_2}} -->
-        <!-- {{Questions[0].Option_1}} -->
-
-        </form>
+    </form>
+   
+</body>
+<!-- "ResultStatus? true : false" -->
+<!-- 
+<div class="wrapper">
+    <div class="wrap" id="q1">
+        <div class="text-center pb-4">
+            <div class="h5 font-weight-bold"><span id="number"> </span>1 of 3 </div>
+        </div>
+        <div class="h4 font-weight-bold"> 1. Who is the Prime Minister of India?</div>
+        <div class="pt-4">
+            <form> <label class="options">Rahul Gandhi <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Indira Gandhi <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Narendra Modi <input type="radio" name="radio" id="rd" checked> <span class="checkmark"></span> </label> <label class="options">Ram Nath Kovind <input type="radio" name="radio"> <span class="checkmark"></span> </label> </form>
+        </div>
+        <div class="d-flex justify-content-end pt-2"> <button class="btn btn-primary" id="next1">Next <span class="fas fa-arrow-right"></span> </button> </div>
     </div>
-</body> 
+    <div class="wrap" id="q2">
+        <div class="text-center pb-4">
+            <div class="h5 font-weight-bold"> <span id="number"> </span>2 of 3 </div>
+        </div>
+        <div class="h4 font-weight-bold"> 2. IPV4 stand's for?</div>
+        <div class="pt-4">
+            <form> <label class="options">Internet Protocol <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Intranet Protocol <input type="radio" name="radio" checked> <span class="checkmark"></span> </label> <label class="options">internet Protocol <input type="radio" name="radio" id="rd"> <span class="checkmark"></span> </label> <label class="options">None of the above <input type="radio" name="radio"> <span class="checkmark"></span> </label> </form>
+        </div>
+        <div class="d-flex justify-content-end pt-2"> <button class="btn btn-primary mx-3" id="back1"> <span class="fas fa-arrow-left pr-1"></span>Previous </button> <button class="btn btn-primary" id="next2">Next <span class="fas fa-arrow-right"></span> </button> </div>
+    </div>
+    <div class="wrap" id="q3">
+        <div class="text-center pb-4">
+            <div class="h5 font-weight-bold"> <span id="number"> </span>3 of 3 </div>
+        </div>
+        <div class="h4 font-weight-bold"> 3. What is the full form of CSS?</div>
+        <div class="pt-4">
+            <form> <label class="options">Clarity Style Sheets <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Cascading Style Sheets <input type="radio" name="radio"> <span class="checkmark"></span> </label> <label class="options">Confirm Style sheets <input type="radio" name="radio" id="rd" checked> <span class="checkmark"></span> </label> <label class="options">Canvas Style Sheets <input type="radio" name="radio"> <span class="checkmark"></span> </label> </form>
+        </div>
+        <div class="d-flex justify-content-end pt-2"> <button class="btn btn-primary mx-3" id="back2"> <span class="fas fa-arrow-left pr-2"></span>Previous </button> <button class="btn btn-primary" id="next3">Submit </button> </div>
+    </div>
+</div>
+<div class="d-flex flex-column align-items-center">
+    <div class="h3 font-weight-bold text-white">Go Dark</div> <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+</div>
+<script>
+    var q1 = document.getElementById("q1");
+    var q2 = document.getElementById("q2");
+    var q3 = document.getElementById("q3");
+    var next1 = document.getElementById('next1')
+    var back1 = document.getElementById('back1')
+    var next2 = document.getElementById('next2')
+    var back2 = document.getElementById('back2')
+    document.addEventListener('DOMContentLoaded', function() {
+        let query = window.matchMedia("(max-width: 767px)");
+        if (query.matches) {
+            next1.onclick = function() {
+                q1.style.left = "-650px";
+                q2.style.left = "15px";
+            }
+            back1.onclick = function() {
+                q1.style.left = "15px";
+                q2.style.left = "650px";
+            }
+            back2.onclick = function() {
+                q2.style.left = "15px";
+                q3.style.left = "650px";
+            }
+            next2.onclick = function() {
+                q2.style.left = "-650px";
+                q3.style.left = "15px";
+            }
+        } else {
+            next1.onclick = function() {
+                q1.style.left = "-650px";
+                q2.style.left = "50px";
+            }
+            back1.onclick = function() {
+                q1.style.left = "50px";
+                q2.style.left = "650px";
+            }
+            back2.onclick = function() {
+                q2.style.left = "50px";
+                q3.style.left = "650px";
+            }
+            next2.onclick = function() {
+                q2.style.left = "-650px";
+                q3.style.left = "50px";
+            }
+        }
+    });
+
+    function uncheck() {
+        var rad = document.getElementById('rd')
+        rad.removeAttribute('checked')
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const main = document.querySelector('body')
+        const toggleSwitch = document.querySelector('.slider')
+        toggleSwitch.addEventListener('click', () => {
+            main.classList.toggle('dark-theme')
+        })
+    })
+</script> -->

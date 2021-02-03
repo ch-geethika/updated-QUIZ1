@@ -16,8 +16,20 @@ export class TestComponent implements OnInit {
   Questions : Iquestions[] = [];
   QNo:number;
   Marks:number;
-  Courseid: number;
+  // Courseid: number;
   Level_id:number;
+  r1: string;
+  time: number = 0;
+display ;
+interval;
+
+timeLeft: number = 3600;
+TestStatus:boolean = false;
+Message:string = "";
+ResultStatus:boolean=false;
+
+
+
    Question:Iquestions=
     {
       Question_id:null,
@@ -29,55 +41,171 @@ export class TestComponent implements OnInit {
         Option_2:null,
         Option_3:null,
         Option_4:null,        
-        Correct_Answer:null,
-        Selected: null,
+        Correct_answer:null,
+     
       }
-  
-    constructor(private quizservice:QuizService,private route: Router) {
+
+    constructor(private quizservice:QuizService,private route: Router,private router:ActivatedRoute) {
       this.QNo=0
       this.Marks=0
+      this.Level_id=1
      }
-  //   saveUser(user:Iquestions){​​​​    
-  //     console.log("hi")
-  //     this.quizservice(this.Questions).subscribe(()=>
-  //     {​​​​  
-  //       // console.log(this.user)    
-  //       alert("Registered");     
-  //      this.route.navigate(['/']);   
-  //    }​​​​,error=>{
-  //     alert(error.Message);
-  //    }); 
-  //  }​​​​
+ 
   ngOnInit(): void {
-    console.log("hi");
-    this.quizservice.getcourses().subscribe((data: Icourse[])=>{
-      console.log(data);
-        this.courses = data;
-    })  
-  
+    // console.log("hi");
+    // this.quizservice.getcourses(this.router.snapshot.params['Course_id']).subscribe((data: Icourse[])=>{
+    //   console.log(data);
+    //     this.courses = data;
+        
+   // })  
+  this.startTest()
+  console.log(this.router.snapshot.params['Course_id'])
   }
   startTest()
     {
- 
-  this.quizservice.getQuestions(this.Courseid,this.Level_id)
+      this.TestStatus=true;
+      this.Marks=0;
+      this.QNo=0;
+      // this.quizservice.getcourses(this.router.snapshot.params['Course_id']).subscribe((data)=>
+      // console.log(data));
+      
+  this.quizservice.getQuestions(this.router.snapshot.params['Course_id'],this.Level_id)
       .subscribe((data: Iquestions[])=>{
               this.Questions = data;
               console.log(this.Questions)
 }) 
- console.log(this.Courseid)
+  this.startTimer1()
+}
+isAnswered()
+{
+  console.log(this.Questions[this.QNo].Correct_answer)
+  console.log(this.r1)
+  if(this.Questions[this.QNo].Correct_answer.toString() === this.r1)
+  { 
+    // console.log("hey true")
+  return true
+  }
+  
+  else
+  // console.log("hey false")
+  return false
 }
 
 Next()
 {
-
+  console.log(this.isAnswered())
+  // console.log(this.r1)
+  if(this.isAnswered())
+  {
+    
+    this.Marks= this.Marks +1;
+    
+  }
   this.QNo=this.QNo+1;
+  this.Reset()
 }
+
+submitTest()
+{
+// this.testStatus=false;
+      if(this.isAnswered())
+      {
+          this.Marks=this.Marks+1;
+        
+      }
+// this.prompt()
+this.StopTimer()
+this.CalculateMarks()
+this.TestStatus = false;
+}
+// prompt()
+// {
+//   if(confirm("Are you sure to submit the test?"))
+//    {
+//     console.log("Submitted the test");
+//   }
+//   else()
+//   { 
+    
+//   }
+// }
+
+
 Previous()
 {
 
   this.QNo=this.QNo-1;
 }
+
+startTimer1() {
+  
+  console.log("=====>");
+  this.interval = setInterval(() => {
+    if(this.time ===30)
+    {
+      
+      console.log(this.time)
+       this.submitTest()
+    }
+    if (this.time === 0) {
+      
+      this.time++;
+    } else {
+      this.time++;
+    }
+    this.display=this.transform( this.time)
+  }, 1000);
+
 }
+
+transform(value: number): string {
+     const minutes: number = Math.floor(value / 60);
+     return minutes + ':' + (value - minutes * 60);
+}
+
+StopTimer() {
+  
+  clearInterval(this.interval);
+  this.time=0;
+  this.display="";
+  
+}
+Reset()
+  {
+    this.r1=""
+  }
+
+  CalculateMarks()
+    {
+      if(this.Marks>=5)
+      {
+        this.ResultStatus=true;
+        this.TestStatus =true;
+        this.Message="Congratulations! You have passed level 1. Click on next to continue";
+        // this.route.navigateByUrl('/test/level_id');
+      }
+      else{
+        this.Message="OOPS!!! You did not clear the Level 1 exam! Better luck next time!";
+        this.ResultStatus=false;
+      }
+    }
+  
+    Continue()
+    {
+      if(this.Level_id<=3)
+      {
+      this.Level_id=this.Level_id+1;
+      this.startTest()
+      }
+     
+    }
+
+    
+
+}
+
+
+
   
    
 

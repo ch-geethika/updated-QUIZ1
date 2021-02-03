@@ -27,13 +27,20 @@ export class QuizService {
     return this.http.get<Iquestions>(this.apiServer + 'questions/GetByID/' + this.httpOptions);
   
   } 
-  getcourses():Observable<Icourse[]>{
-    return this.http.get<Icourse[]>(this.apiServer + "/Course/",this.httpOptions);
+  getcourses(courseid):Observable<Icourse[]>{
+    return this.http.get<Icourse[]>(this.apiServer + "/Course/" + courseid, this.httpOptions);
   }​​​​
-  getQuestions(Course_id,Level_id): Observable<Iquestions[]> {
+  getAllCourses():Observable<Icourse[]>{
+    return this.http.get<Icourse[]>(this.apiServer + "/Course" );
+  }​​​​
+  // getcoursesById(Course_id): Observable<Iquestions> {
+  //   return this.http.get<Iquestions>(this.apiServer + 'questions/GetByID/' + this.httpOptions);http://localhost:49965/api/questions?courseid=100&levelid=1
+  // } 
+  getQuestions(courseid,Level_id): Observable<Iquestions[]> {
     return this.http.get<Iquestions[]>
-    (this.apiServer + '/questions'+ Course_id +Level_id )
+    (this.apiServer + '/questions?courseid='+courseid+'&levelid='+ Level_id )
    }
+ 
   }
   
 
